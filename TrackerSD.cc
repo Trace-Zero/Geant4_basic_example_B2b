@@ -70,7 +70,10 @@ G4bool TrackerSD::ProcessHits(G4Step* step, G4TouchableHistory*)
   auto newHit = new TrackerHit();
 
   newHit->SetTrackID(step->GetTrack()->GetTrackID());
-  newHit->SetChamberNb(step->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber());
+  newHit->SetChamberNb(step->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber(1));
+//safiye (1)
+  newHit->SetGapNb(step->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber(0));
+
   newHit->SetEdep(edep);
   newHit->SetPos(step->GetPostStepPoint()->GetPosition());
 

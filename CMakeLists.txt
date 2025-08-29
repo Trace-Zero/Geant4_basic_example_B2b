@@ -9,7 +9,7 @@ project(B2b)
 # See the documentation for a guide on how to enable/disable specific components
 #
 find_package(Geant4 REQUIRED ui_all vis_all)
-
+find_package(ROOT REQUIRED COMPONENTS Core Tree Hist)
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
@@ -21,9 +21,13 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 # Add the executable, use our local headers, and link it to the Geant4 libraries
 #
 add_executable(exampleB2b exampleB2b.cc ${sources} ${headers})
-target_include_directories(exampleB2b PRIVATE include)
-target_link_libraries(exampleB2b PRIVATE ${Geant4_LIBRARIES})
-
+target_include_directories(exampleB2b PRIVATE
+  include
+  ${ROOT_INCLUDE_DIRS})
+target_link_libraries(exampleB2b PRIVATE
+  ${Geant4_LIBRARIES}
+  ${ROOT_LIBRARIES}
+)
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
 # build B2b. This is so that we can run the executable directly because it

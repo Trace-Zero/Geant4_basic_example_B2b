@@ -31,6 +31,8 @@
 #define B2EventAction_h 1
 
 #include "G4UserEventAction.hh"
+//safiye
+#include "globals.hh"   // <-- brings G4double, G4int
 
 class G4Event;
 
@@ -38,15 +40,20 @@ namespace B2
 {
 
 /// Event action class
-
-class EventAction : public G4UserEventAction
-{
+class RunAction; // forward declare
+class EventAction : public G4UserEventAction{
   public:
-    EventAction() = default;
+    explicit EventAction(RunAction* runAction);// <-- ctor needed by ActionInitialization
     ~EventAction() override = default;
 
-    void BeginOfEventAction(const G4Event*) override;
-    void EndOfEventAction(const G4Event*) override;
+    void BeginOfEventAction(const G4Event* event) override;
+    void EndOfEventAction(const G4Event* event) override;
+  private:
+  RunAction* fRunAction = nullptr;
+  G4double   fTotalEdep = 0.0;
+  G4double   fTotalTrackLength = 0.0;
+  G4int      fEventID = -1;
+
 };
 
 }  // namespace B2

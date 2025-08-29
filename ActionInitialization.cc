@@ -48,8 +48,10 @@ void ActionInitialization::BuildForMaster() const
 void ActionInitialization::Build() const
 {
   SetUserAction(new PrimaryGeneratorAction);
-  SetUserAction(new RunAction);
-  SetUserAction(new EventAction);
+  auto* runAction = new RunAction();
+  SetUserAction(runAction);
+//safiye(runAction)
+  SetUserAction(new EventAction(runAction));
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

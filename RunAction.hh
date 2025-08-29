@@ -33,21 +33,37 @@
 #include "G4UserRunAction.hh"
 
 class G4Run;
-
+class TFile; class TTree; // forward decl.
 namespace B2
 {
 
 /// Run action class
 
-class RunAction : public G4UserRunAction
-{
+class RunAction : public G4UserRunAction{
   public:
     RunAction();
     ~RunAction() override = default;
 
     void BeginOfRunAction(const G4Run* run) override;
     void EndOfRunAction(const G4Run* run) override;
+//safiye
+    void FillHit(int ev, int trk, int chamb, int gap,
+               double edep, double x, double y, double z);
+
+
+  private:
+// ROOT handles
+    TFile* fFile = nullptr;
+    TTree* fTree = nullptr;
+
+    int    b_event   = -1;
+    int    b_trackID = -1;
+    int    b_chamber = -1;
+    int    b_gap     = -1;
+    double b_edep    = 0.0;
+    double b_x = 0.0, b_y = 0.0, b_z = 0.0;
 };
+
 
 }  // namespace B2
 
